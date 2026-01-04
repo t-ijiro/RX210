@@ -147,9 +147,7 @@ void main(void)
 				pencil_update(&pencil[i]);
 			}
 			
-			matrix_copy(screen_buf);
 			matrix_flush();
-			matrix_paste(screen_buf);
 
 			timer_event_flag &= ~TASK_GRADATION;
 		}
