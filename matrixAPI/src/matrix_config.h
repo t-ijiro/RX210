@@ -1,7 +1,7 @@
 #ifndef MATRIX_CONFIG_H
 #define MATRIX_CONFIG_H
 
-// ISR内でこのAPIを使用するかどうかの設定
+// ISR内でmatrixAPIを使用するかどうかの設定
 #define MATRIX_USE_IN_ISR 0
 
 // フォント機能を使用するかどうかの設定
