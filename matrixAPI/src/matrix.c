@@ -23,7 +23,19 @@ static uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
 static uint16_t *canvas  = buffer[0];
 
 // 表示バッファへのポインタ
-static uint16_t *display = buffer[1]; 
+static uint16_t *display = buffer[1];
+
+#if MATRIX_USE_IN_ISR
+// ISR使用時
+static volatile uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
+static volatile uint16_t *canvas  = buffer[0];
+static volatile uint16_t *display = buffer[1];
+#else
+// mainのみ
+static uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
+static uint16_t *canvas  = buffer[0];
+static uint16_t *display = buffer[1];
+#endif /* MATRIX_USE_IN_ISR */
 
 // 入出力初期化
 void matrix_init(void)
@@ -246,16 +258,24 @@ void matrix_scroll_text(const char dir)
 }
 #endif /* MATRIX_USE_FONT */
 
-// 描画バッファを外部バッファにコピー
 void matrix_copy(uint16_t dst[MATRIX_WIDTH])
 {
-    memmove(dst, canvas, sizeof(buffer[0]));
+    uint8_t i;
+    
+    for(i = 0; i < MATRIX_WIDTH; i++)
+    {
+        dst[i] = canvas[i];  
+    }
 }
 
-// 描画バッファに外部バッファを貼り付け
 void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 {
-    memmove(canvas, src, sizeof(buffer[0]));
+    uint8_t i;
+    
+    for(i = 0; i < MATRIX_WIDTH; i++)
+    {
+        canvas[i] = src[i];  
+    }
 }
 
 // 描画バッファを表示バッファと入れ替える
