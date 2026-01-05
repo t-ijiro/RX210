@@ -16,25 +16,16 @@
 // ダイナミック点灯制御ポート
 #define DYNAMIC_PORT PORTE.PODR.BYTE 
 
-// ダブルバッファ
-static uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
-
-// 描画バッファへのポインタ
-static uint16_t *canvas  = buffer[0];
-
-// 表示バッファへのポインタ
-static uint16_t *display = buffer[1];
-
 #if MATRIX_USE_IN_ISR
 // ISR使用時
 static volatile uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
-static volatile uint16_t *canvas  = buffer[0];
-static volatile uint16_t *display = buffer[1];
+static volatile uint16_t *back  = buffer[0];
+static volatile uint16_t *front = buffer[1];
 #else
 // mainのみ
 static uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
-static uint16_t *canvas  = buffer[0];
-static uint16_t *display = buffer[1];
+static uint16_t *back  = buffer[0];
+static uint16_t *front = buffer[1];
 #endif /* MATRIX_USE_IN_ISR */
 
 // 入出力初期化
@@ -52,16 +43,16 @@ void matrix_init(void)
 // 描画バッファの指定座標に色を書き込む
 void matrix_write(const uint8_t x, const uint8_t y, const pixel_color_t c)
 {
-    canvas[x] &= ~((1 << (y + 8)) | (1 << y));
+    back[x] &= ~((1 << (y + 8)) | (1 << y));
 
     if(c & pixel_red)
     {
-        canvas[x] |= (1 << (y + 8));
+        back[x] |= (1 << (y + 8));
     }
 
     if(c & pixel_green)
     {
-        canvas[x] |= (1 << y);
+        back[x] |= (1 << y);
     }
 }
 
@@ -70,12 +61,12 @@ pixel_color_t matrix_read(const uint8_t x, const uint8_t y)
 {
     pixel_color_t c = pixel_off;
     
-    if(canvas[x] & (1 << (y + 8)))
+    if(back[x] & (1 << (y + 8)))
     {
         c |= pixel_red;
     }
 
-    if(canvas[x] & (1 << y))
+    if(back[x] & (1 << y))
     {
         c |= pixel_green;
     }
@@ -90,7 +81,7 @@ void matrix_clear(void)
 
 	for(x = 0; x < MATRIX_WIDTH; x++)
 	{
-        canvas[x] = 0x0000;
+        back[x] = 0x0000;
 	}
 }
 
@@ -258,38 +249,40 @@ void matrix_scroll_text(const char dir)
 }
 #endif /* MATRIX_USE_FONT */
 
+// 描画バッファを外部バッファにコピー
 void matrix_copy(uint16_t dst[MATRIX_WIDTH])
 {
     uint8_t i;
     
     for(i = 0; i < MATRIX_WIDTH; i++)
     {
-        dst[i] = canvas[i];  
+        dst[i] = back[i];  
     }
 }
 
+// 外部バッファを描画バッファにコピー
 void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 {
     uint8_t i;
     
     for(i = 0; i < MATRIX_WIDTH; i++)
     {
-        canvas[i] = src[i];  
+        back[i] = src[i];  
     }
 }
 
 // 描画バッファを表示バッファと入れ替える
 void matrix_flush(void)
 {
-    uint16_t *tmp = display;
-    display = canvas;
-    canvas  = tmp;
+    uint16_t *tmp = front;
+    front = back;
+    back  = tmp;
 }
 
 // 指定列のマトリックスLED送信用16bitデータを取得
 uint16_t matrix_get_data(const uint8_t x)
 {
-    return display[x];
+    return front[x];
 }
 
 // 16bitデータをマトリックスLEDの指定列に出力
