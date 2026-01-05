@@ -271,7 +271,7 @@ void matrix_paste(const uint16_t src[MATRIX_WIDTH])
     }
 }
 
-// 描画バッファを表示バッファと入れ替える
+// 描画バッファと表示バッファを入れ替える
 void matrix_present(void)
 {
     uint16_t *tmp = front;
