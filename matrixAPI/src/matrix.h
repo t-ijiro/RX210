@@ -63,7 +63,7 @@ void matrix_paste(const uint16_t src[MATRIX_WIDTH]);
 
 // 描画バッファと表示バッファを入れ替える
 // inherit = true で描画バッファを引き継ぎ可能
-void matrix_flush(const bool inherit);
+void matrix_present(const bool inherit);
 
 // 指定列のマトリックスLED送信用16bitデータを取得
 uint16_t matrix_get_data(const uint8_t x);
