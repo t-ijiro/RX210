@@ -60,8 +60,21 @@ void matrix_copy(uint16_t dst[MATRIX_WIDTH]);
 // 描画バッファに外部バッファを貼り付け
 void matrix_paste(const uint16_t src[MATRIX_WIDTH]);
 
-// 描画バッファを表示バッファへ反映
-void matrix_flush(void);
+// 描画バッファを表示バッファと入れ替える
+// １フレーム単位で呼ぶことを推奨
+// ISR内でのプログラム例 :
+// scan_x++;
+//
+// if(scan_x >= MATRIX_WIDTH)
+// {
+//     scan_x = 0;
+//     frame_end = true; // このフラグをみてmain側でpresent
+// }
+//
+// data16 = matrix_get_data(scan_x);
+//
+// matrix_out(scan_x, data16);
+void matrix_present(void);
 
 // 指定列のマトリックスLED送信用16bitデータを取得
 uint16_t matrix_get_data(const uint8_t x);
