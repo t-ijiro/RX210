@@ -273,14 +273,14 @@ void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 }
 
 // 描画バッファと表示バッファを入れ替える
-// backup = true で描画バッファを引き継ぎ可能
-void matrix_flush(const bool backup)
+// inherit = true で描画バッファを引き継ぎ可能
+void matrix_flush(const bool inherit)
 {
     uint16_t *tmp = front;
     front = back;
     back  = tmp;
     
-    if(backup)
+    if(inherit)
     {
         matrix_paste(front);
     }
