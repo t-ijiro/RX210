@@ -147,12 +147,9 @@ void main(void)
 				pencil_update(&pen[i]);
 			}
 			
-			// このプログラムは継ぎ足し描画なので
-			// 描画バッファのバックアップを取っておく
-			matrix_copy(backup);
-			matrix_present();
-			matrix_paste(backup);
-
+			// take_over = true
+			matrix_flush(true);
+		
 			timer_event_flag &= ~TASK_GRADATION;
 		}
 
@@ -175,3 +172,4 @@ void abort(void)
 
 }
 #endif
+
