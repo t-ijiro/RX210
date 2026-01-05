@@ -3,6 +3,7 @@
 // Author : T.Ijiro
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
 #include "iodefine.h"
 #include "matrix_config.h"
@@ -16,14 +17,14 @@
 // ダイナミック点灯制御ポート
 #define DYNAMIC_PORT PORTE.PODR.BYTE 
 
-// ダブルバッファ
-static uint16_t buffer[2][MATRIX_WIDTH] = {{0x0000}};
+// 描画バッファ
+static uint16_t canvas[MATRIX_WIDTH]  = {0x0000};
 
-// 描画バッファへのポインタ
-static uint16_t *canvas  = buffer[0];
+// 表示バッファ
+static uint16_t display[MATRIX_WIDTH] = {0x0000}; 
 
-// 表示バッファへのポインタ
-static uint16_t *display = buffer[1]; 
+// flush処理中フラグ
+static volatile bool f_busy = false;
 
 // 入出力初期化
 void matrix_init(void)
@@ -249,21 +250,28 @@ void matrix_scroll_text(const char dir)
 // 描画バッファを外部バッファにコピー
 void matrix_copy(uint16_t dst[MATRIX_WIDTH])
 {
-    memmove(dst, canvas, sizeof(buffer[0]));
+    memmove(dst, canvas, sizeof(canvas));
 }
 
 // 描画バッファに外部バッファを貼り付け
 void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 {
-    memmove(canvas, src, sizeof(buffer[0]));
+    memmove(canvas, src, sizeof(canvas));
 }
 
 // 描画バッファを表示バッファと入れ替える
 void matrix_flush(void)
 {
-    uint16_t *tmp = display;
-    display = canvas;
-    canvas  = tmp;
+    f_busy = true;
+    memmove(display, canvas, sizeof(canvas));
+    f_busy = false;
+}
+
+// flush処理中かどうかを返す
+// 主にISR内での使用を想定
+bool matrix_flush_is_busy(void)
+{
+    return f_busy;
 }
 
 // 指定列のマトリックスLED送信用16bitデータを取得
