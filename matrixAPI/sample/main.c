@@ -156,7 +156,6 @@ void main(void)
 		// ************************************************************
 		if(timer_event_flag & TASK_SCROLL)
 		{
-			// グラデーション処理で上書きするのでflushはしない
 			matrix_scroll_text('l');
 			
 			timer_event_flag &= ~TASK_SCROLL;
