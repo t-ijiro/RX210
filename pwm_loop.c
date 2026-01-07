@@ -17,7 +17,7 @@ void loop()
             shrehold = 0;
         }
         
-        matrix_write(0, 0,pwm_mode ? c : pixel_off);
+        matrix_write(0, 0, pwm_mode ? c : pixel_off);
         matrix_flush();
     }
 
