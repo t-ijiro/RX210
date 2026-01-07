@@ -6,7 +6,7 @@ void loop()
         matrix_flush();
     }
     
-    if(t == RERIOD)
+    if(t == CYCLE_TIME)
     {
         t = 0;
         duty--;
@@ -14,7 +14,7 @@ void loop()
         if(duty == 0)
         {
             pwm_mode ^= 1;
-            duty = PERIOD;
+            duty = CYCLE_TIME;
         }
         
         matrix_write(0, 0, pwm_mode ? c : pixel_off);
