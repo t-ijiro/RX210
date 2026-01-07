@@ -6,7 +6,7 @@ void loop()
         matrix_flush();
     }
     
-    if(threshold == CYCLE_TIME)
+    if(t == CYCLE_TIME)
     {
         t = 0; 
         threshold--;
