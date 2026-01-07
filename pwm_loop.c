@@ -1,25 +1,25 @@
 void loop()
 {
-    if(t == threhold)
+    if(t == duty)
     {
         matrix_write(0, 0, pwm_mode ? pixel_off : c);
         matrix_flush();
     }
     
-    if(t == 0)
+    if(t == RERIOD)
     {
-        t = T_MAX;
-        threhold++;
+        t = 0;
+        duty--;
 
-        if(threhold == T_MAX)
+        if(duty == 0)
         {
             pwm_mode ^= 1;
-            threhold = 0;
+            duty = PERIOD;
         }
         
         matrix_write(0, 0, pwm_mode ? c : pixel_off);
         matrix_flush();
     }
 
-    t--;
+    t++;
 }
