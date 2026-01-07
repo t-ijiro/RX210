@@ -1,20 +1,20 @@
 void loop()
 {
-    if(t == ton)
+    if(t == threshold)
     {
         matrix_write(0, 0, pwm_mode ? pixel_off : c);
         matrix_flush();
     }
     
-    if(t == CYCLE_TIME)
+    if(threshold == CYCLE_TIME)
     {
         t = 0; 
-        ton--;
+        threshold--;
 
-        if(ton == 0)
+        if(threshold == 0)
         {
             pwm_mode ^= 1;
-            duty = CYCLE_TIME;
+            threshold = CYCLE_TIME;
         }
         
         matrix_write(0, 0, pwm_mode ? c : pixel_off);
