@@ -272,17 +272,37 @@ void matrix_paste(const uint16_t src[MATRIX_WIDTH])
     }
 }
 
+#if MATRIX_USE_IN_ISR
+static void v_matrix_paste(const volatile uint16_t src[MATRIX_WIDTH])
+{
+    uint8_t i;
+    
+    for(i = 0; i < MATRIX_WIDTH; i++)
+    {
+        back[i] = src[i];  
+    }
+}
+#endif
+
 // 描画バッファと表示バッファを入れ替える
 // inherit = true で描画バッファを継承
 void matrix_flush(const bool inherit)
 {
+#if MATRIX_USE_IN_ISR
+    volatile uint16_t *tmp = front;
+#else
     uint16_t *tmp = front;
+#endif
     front = back;
     back  = tmp;
-    
+
     if(inherit)
     {
-        matrix_paste(front);
+#if MATRIX_USE_IN_ISR
+    v_matrix_paste(front);
+#else
+    matrix_paste(front);
+#endif
     }
 }
 
