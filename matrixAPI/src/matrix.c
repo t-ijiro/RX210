@@ -234,7 +234,6 @@ void matrix_scroll_text(const char dir)
             }
 
             break;
-
         case 'r':
             scroll_text.position--;
 
@@ -244,7 +243,6 @@ void matrix_scroll_text(const char dir)
             }       
 
             break;
-
         default:
             break;
     }
@@ -289,7 +287,7 @@ static void v_matrix_paste(const volatile uint16_t src[MATRIX_WIDTH])
 // 描画バッファと表示バッファを入れ替える
 // option = BUFF_INHERIT で描画バッファ内容を保持
 // option = BUFF_CLEAR   で描画バッファ内容を破棄
-void matrix_flush(const handle_buff_t)
+void matrix_flush(const handle_buff_t option)
 {
 #if MATRIX_USE_IN_ISR
     volatile uint16_t *tmp = front;
@@ -299,17 +297,21 @@ void matrix_flush(const handle_buff_t)
     front = back;
     back  = tmp;
 
-    if(inherit)
+    switch(option)
     {
+        case BUFF_INHERIT:
 #if MATRIX_USE_IN_ISR
-        v_matrix_paste(front);
+            v_matrix_paste(front);
 #else
-        matrix_paste(front);
+            matrix_paste(front);
 #endif /* MATRIX_USE_IN_ISR */
-    }
-    else 
-    {
-        matrix_clear();
+            break;
+        case BUFF_CLEAR:
+            matrix_clear();
+            break;
+        default :
+            // 描画バッファの状態は不定
+            break;
     }
 }
 
