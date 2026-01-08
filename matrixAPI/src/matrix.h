@@ -10,14 +10,14 @@
 #include "matrix_config.h"
 
 // 横ドット数
-#define MATRIX_WIDTH  8
+#define MATRIX_WIDTH  8u
 // 縦ドット数
-#define MATRIX_HEIGHT 8
+#define MATRIX_HEIGHT 8u
 
 // フラッシュ後も描画バッファ内容を保持する
-#define BUFF_INHERIT  true
+#define BUFF_INHERIT true
 // フラッシュ後に描画バッファ内容を破棄する
-#define BUFF_ABANDON  false
+#define BUFF_CLEAR   false
 
 // uint8_tを色を扱う時の型として定義
 typedef uint8_t pixel_color_t;
@@ -67,8 +67,9 @@ void matrix_copy(uint16_t dst[MATRIX_WIDTH]);
 void matrix_paste(const uint16_t src[MATRIX_WIDTH]);
 
 // 描画バッファと表示バッファを入れ替える
-// inherit = true で描画バッファを引き継ぎ可能
-void matrix_flush(const bool inherit);
+// option = true で描画バッファを引き継ぎ可能
+// option = false で描画バッファ内容を破棄
+void matrix_flush(const bool option);
 
 // 指定列のマトリックスLED送信用16bitデータを取得
 uint16_t matrix_get_data(const uint8_t x);
