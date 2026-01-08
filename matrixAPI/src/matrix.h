@@ -14,10 +14,10 @@
 // 縦ドット数
 #define MATRIX_HEIGHT 8
 
-// 描画バッファ継承定数
-#define BUFF_INHERIT true
-// 描画バッファ破棄定数
-#define BUFF_ABANDON false
+// フラッシュ後も描画バッファ内容を保持する
+#define BUFF_INHERIT  true
+// フラッシュ後に描画バッファ内容を破棄する
+#define BUFF_ABANDON  false
 
 // uint8_tを色を扱う時の型として定義
 typedef uint8_t pixel_color_t;
