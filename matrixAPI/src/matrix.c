@@ -287,7 +287,8 @@ static void v_matrix_paste(const volatile uint16_t src[MATRIX_WIDTH])
 #endif /* MATRIX_USE_IN_ISR */
 
 // 描画バッファと表示バッファを入れ替える
-// inherit = true で描画バッファを継承
+// inherit = true  で描画バッファ内容を継承
+// inherit = false で描画バッファ内容を破棄
 void matrix_flush(const bool inherit)
 {
 #if MATRIX_USE_IN_ISR
@@ -305,6 +306,10 @@ void matrix_flush(const bool inherit)
 #else
         matrix_paste(front);
 #endif /* MATRIX_USE_IN_ISR */
+    }
+    else 
+    {
+        matrix_clear();
     }
 }
 
