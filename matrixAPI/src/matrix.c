@@ -286,8 +286,8 @@ static void v_matrix_paste(const volatile uint16_t src[MATRIX_WIDTH])
 #endif /* MATRIX_USE_IN_ISR */
 
 // 描画バッファと表示バッファを入れ替える
-// option = BUFF_INHERIT で描画バッファ内容を保持
-// option = BUFF_CLEAR   で描画バッファ内容を破棄
+// option = HANDLE_BUFF_INHERIT で描画バッファ内容を保持
+// option = HANDLE_BUFF_CLEAR   で描画バッファ内容を破棄
 void matrix_flush(const handle_buff_t option)
 {
 #if MATRIX_USE_IN_ISR
@@ -300,14 +300,14 @@ void matrix_flush(const handle_buff_t option)
 
     switch(option)
     {
-        case BUFF_INHERIT:
+        case HANDLE_BUFF_INHERIT:
 #if MATRIX_USE_IN_ISR
             v_matrix_paste(front);
 #else
             matrix_paste(front);
 #endif /* MATRIX_USE_IN_ISR */
             break;
-        case BUFF_CLEAR:
+        case HANDLE_BUFF_CLEAR:
             matrix_clear();
             break;
         default :
