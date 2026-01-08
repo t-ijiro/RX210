@@ -213,7 +213,7 @@ void matrix_scroll_text(const char dir)
 			uint16_t idx = (scroll_text.position + x) % scroll_text.length;
 			
 			if(scroll_text.text[idx] & (1 << y))
-            {
+        {
                 matrix_write(x, y, scroll_text.fg_color);
 			}
 			else
