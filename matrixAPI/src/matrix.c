@@ -254,22 +254,22 @@ void matrix_scroll_text(const char dir)
 // 描画バッファを外部バッファにコピー
 void matrix_copy(uint16_t dst[MATRIX_WIDTH])
 {
-    uint8_t i;
+    uint8_t x;
     
-    for(i = 0; i < MATRIX_WIDTH; i++)
+    for(x = 0; x < MATRIX_WIDTH; x++)
     {
-        dst[i] = back[i];  
+        dst[x] = back[x];  
     }
 }
 
 // 外部バッファを描画バッファにコピー
 void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 {
-    uint8_t i;
+    uint8_t x;
     
-    for(i = 0; i < MATRIX_WIDTH; i++)
+    for(x = 0; x < MATRIX_WIDTH; x++)
     {
-        back[i] = src[i];  
+        back[x] = src[x];  
     }
 }
 
@@ -277,11 +277,11 @@ void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 #if MATRIX_USE_IN_ISR
 static void v_matrix_paste(const volatile uint16_t src[MATRIX_WIDTH])
 {
-    uint8_t i;
+    uint8_t x;
     
-    for(i = 0; i < MATRIX_WIDTH; i++)
+    for(x = 0; x < MATRIX_WIDTH; x++)
     {
-        back[i] = src[i];  
+        back[x] = src[x];  
     }
 }
 #endif /* MATRIX_USE_IN_ISR */
