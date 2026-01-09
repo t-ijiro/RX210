@@ -56,7 +56,7 @@ void pwm_update(uint8_t x, uint8_t y)
 	if(p->count == p->threshold)
 	{
 		matrix_write(x, y, !p->mode ? p->color : pixel_off);
-		matrix_flush(true);
+		matrix_flush(HANDLE_BUFF_INHERIT);
 	}
 
 	if(p->count == CYCLE)
@@ -76,7 +76,7 @@ void pwm_update(uint8_t x, uint8_t y)
 		}
 
 		matrix_write(x, y, p->mode ? p->color : pixel_off);
-		matrix_flush(true);
+		matrix_flush(HANDLE_BUFF_INHERIT);
 	}
 
 	p->count++;
