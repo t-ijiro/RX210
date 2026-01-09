@@ -62,7 +62,6 @@ void Excep_CMT0_CMI0(void)
 	vert_cnt %= 8;
 
 	matrix_out(vert_cnt, matrix_get_data(vert_cnt));
-
 }
 
 // CMT1 CMI1
