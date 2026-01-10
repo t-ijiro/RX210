@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <string.h>
 #include "iodefine.h"
-#include "matrix_config.h"
 #include "matrix.h"
 
 // 74HC595への出力ピン
