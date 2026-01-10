@@ -6,8 +6,20 @@
 #define MATRIX_H
 
 #include <stdint.h>
-#include <stdbool.h>
-#include "matrix_config.h"
+
+// *******************************************
+// ビルド設定
+// *******************************************
+// 1..ISRでダイナミック点灯処理を行う
+// 0..mainでダイナミック点灯処理を行う
+#define MATRIX_DYNAMIC_IN_ISR 1
+
+// 1..フォント機能を使用する
+// 0..フォント機能を使用しない
+#define MATRIX_USE_FONT 1
+// *******************************************
+// 
+// *******************************************
 
 // 横ドット数
 #define MATRIX_WIDTH  8u
@@ -20,7 +32,7 @@ typedef enum {
     pixel_red,     // 1 ..赤
     pixel_green,   // 2 ..緑
     pixel_orange   // 3 ..橙
-}pixel_t;
+} pixel_t;
 
 // フラッシュ時の描画バッファ処理用の型
 typedef enum {
@@ -28,7 +40,7 @@ typedef enum {
     HANDLE_BUFF_INHERIT,
     // フラッシュ後に描画バッファの内容を破棄する
     HANDLE_BUFF_CLEAR
-}handle_buff_t;
+} handle_buff_t;
 
 #if MATRIX_USE_FONT
 // １文字を描画バッファに書き込む
