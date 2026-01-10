@@ -82,7 +82,7 @@ void matrix_clear(void)
 }
 
 // アスキー文字使用時
-#if MATRIX_USE_ ASCII
+#if MATRIX_USE_ASCII
 #define FONT_WIDTH 8 // アルファベット１文字分のデータ幅
 #define SCROLL_TEXT_SIZE 32 // スクロール文字列の文字数
 #define SCROLL_BUF_SIZE (SCROLL_TEXT_SIZE * FONT_WIDTH)
