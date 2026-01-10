@@ -3,7 +3,6 @@
 // Author : T.Ijiro
 
 #include <stdint.h>
-#include <stdbool.h>
 #include <string.h>
 #include "iodefine.h"
 #include "matrix_config.h"
@@ -43,7 +42,7 @@ void matrix_init(void)
 }
 
 // 描画バッファの指定座標に色を書き込む
-void matrix_write(const uint8_t x, const uint8_t y, const pixel_color_t c)
+void matrix_write(const uint8_t x, const uint8_t y, const pixel_t c)
 {
     back[x] &= ~((1 << (y + 8)) | (1 << y));
 
@@ -59,9 +58,9 @@ void matrix_write(const uint8_t x, const uint8_t y, const pixel_color_t c)
 }
 
 // 描画バッファの指定座標の色を読み込む
-pixel_color_t matrix_read(const uint8_t x, const uint8_t y)
+pixel_t matrix_read(const uint8_t x, const uint8_t y)
 {
-    pixel_color_t c = pixel_off;
+    pixel_t c = pixel_off;
     
     if(back[x] & (1 << (y + 8)))
     {
@@ -128,8 +127,8 @@ typedef struct{
     uint8_t text[SCROLL_BUF_SIZE];
     int32_t length;
     int32_t position;
-    pixel_color_t fg_color;
-    pixel_color_t bg_color;
+    pixel_t fg_color;
+    pixel_t bg_color;
 }scroll_text_t;
 
 // スクロール文字列管理変数
@@ -143,7 +142,7 @@ static scroll_text_t scroll_text = {
 
 // １文字を描画バッファに書き込む
 // ch: 描画する文字 (A-Zのみ対応)
-void matrix_put_char(const char ch, const pixel_color_t fg, const pixel_color_t bg)
+void matrix_put_char(const char ch, const pixel_t fg, const pixel_t bg)
 {
     uint8_t x, y;
 
@@ -195,7 +194,7 @@ void matrix_set_scroll_text(const char *text)
 }
 
 // スクロール文字列の前景色・背景色を設定
-void matrix_set_scroll_colors(const pixel_color_t fg, const pixel_color_t bg)
+void matrix_set_scroll_colors(const pixel_t fg, const pixel_t bg)
 {
     scroll_text.fg_color = fg;
     scroll_text.bg_color = bg;
