@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <machine.h>
 #include "iodefine.h"
 #include "matrix.h"
 
