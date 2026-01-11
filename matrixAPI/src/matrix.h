@@ -21,13 +21,20 @@
 // bit[7:0]  : 指定列の緑LEDの点灯パターン
 // 例 : 0xAF5F = 0b1010111101011111
 // 意味 : 上から順に赤緑赤緑橙橙橙橙で点灯
-// *******************************************
-// *******************************************
-
-// 横ドット数
-#define MATRIX_WIDTH  8u
-// 縦ドット数
-#define MATRIX_HEIGHT 8u
+//
+// データ配列を作る際は配列のサイズをマトリックスLEDの列数に合わせる
+// 行
+// 7 
+// 6  
+// 5
+// 4
+// 3
+// 2
+// 1
+// 0
+//    0  1  2  3  4  5  6  7 列
+// *****************************************************
+// *****************************************************
 
 // LEDの色の型
 typedef enum {
@@ -77,10 +84,10 @@ pixel_t matrix_read(uint8_t x, uint8_t y);
 void matrix_clear(void);
 
 // 描画バッファを外部バッファにコピー
-void matrix_copy(uint16_t dst[MATRIX_WIDTH]);
+void matrix_copy(uint16_t *dst);
 
 // 描画バッファに外部バッファを貼り付け
-void matrix_paste(const uint16_t src[MATRIX_WIDTH]);
+void matrix_paste(const uint16_t *src);
 
 // 描画バッファと表示バッファを入れ替える
 // option = HANDLE_BUFF_KEEP  で描画バッファ内容を保持
