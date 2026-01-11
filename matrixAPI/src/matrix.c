@@ -82,7 +82,7 @@ void matrix_clear(void)
     memset(back, 0x0000, MATRIX_WIDTH);
 }
 
-// フォント機能使用時
+// フォント機能有効時
 #ifdef MATRIX_USE_FONT
 #define FONT_WIDTH 8 // アルファベット１文字分のデータ幅
 #define SCROLL_TEXT_SIZE 32 // スクロール文字列の文字数
