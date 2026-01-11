@@ -82,7 +82,7 @@ void matrix_clear(void)
 	}
 }
 
-// アスキー文字使用時
+// 文字機能使用時
 #if MATRIX_USE_ASCII
 #define FONT_WIDTH 8 // アルファベット１文字分のデータ幅
 #define SCROLL_TEXT_SIZE 32 // スクロール文字列の文字数
@@ -243,7 +243,7 @@ void matrix_scroll_text(char dir)
 		}
 	}
 }
-#endif /* MATRIX_USE_ASCII */
+#endif /* MATRIX_USE_FONT */
 
 // 描画バッファを外部バッファにコピー
 void matrix_copy(uint16_t dst[MATRIX_WIDTH])
