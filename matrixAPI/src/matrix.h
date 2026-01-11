@@ -33,7 +33,7 @@ typedef enum {
 // フラッシュ時の描画バッファ処理用の型
 typedef enum {
     // フラッシュ後も描画バッファの内容を保持する
-    HANDLE_BUFF_INHERIT,
+    HANDLE_BUFF_KEEP,
     // フラッシュ後に描画バッファの内容を破棄する
     HANDLE_BUFF_CLEAR
 } handle_buff_t;
@@ -76,8 +76,8 @@ void matrix_copy(uint16_t dst[MATRIX_WIDTH]);
 void matrix_paste(const uint16_t src[MATRIX_WIDTH]);
 
 // 描画バッファと表示バッファを入れ替える
-// option = HANDLE_BUFF_INHERIT で描画バッファ内容を保持
-// option = HANDLE_BUFF_CLEAR   で描画バッファ内容を破棄
+// option = HANDLE_BUFF_KEEP  で描画バッファ内容を保持
+// option = HANDLE_BUFF_CLEAR で描画バッファ内容を破棄
 void matrix_flush(handle_buff_t option);
 
 // 指定列のマトリックスLED送信用16bitデータを取得
