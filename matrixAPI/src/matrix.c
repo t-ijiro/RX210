@@ -74,12 +74,7 @@ pixel_t matrix_read(uint8_t x, uint8_t y)
 // 描画バッファ全削除
 void matrix_clear(void)
 {
-    uint8_t x;
-
-	for(x = 0; x < MATRIX_WIDTH; x++)
-	{
-        back[x] = 0x0000;
-	}
+    memset(back, 0x0000, MATRIX_WIDTH);
 }
 
 // フォント機能使用時
@@ -248,23 +243,13 @@ void matrix_scroll_text(char dir)
 // 描画バッファを外部バッファにコピー
 void matrix_copy(uint16_t dst[MATRIX_WIDTH])
 {
-    uint8_t x;
-    
-    for(x = 0; x < MATRIX_WIDTH; x++)
-    {
-        dst[x] = back[x];  
-    }
+    memmove(dst, back, MATRIX_WIDTH);
 }
 
 // 外部バッファを描画バッファにコピー
 void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 {
-    uint8_t x;
-    
-    for(x = 0; x < MATRIX_WIDTH; x++)
-    {
-        back[x] = src[x];  
-    }
+    memmove(back, src, MATRIX_WIDTH);
 }
 
 // 描画バッファと表示バッファを入れ替える
