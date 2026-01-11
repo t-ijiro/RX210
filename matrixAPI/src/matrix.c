@@ -268,8 +268,8 @@ void matrix_paste(const uint16_t src[MATRIX_WIDTH])
 }
 
 // 描画バッファと表示バッファを入れ替える
-// option = HANDLE_BUFF_INHERIT で描画バッファ内容を保持
-// option = HANDLE_BUFF_CLEAR   で描画バッファ内容を破棄
+// option = HANDLE_BUFF_KEEP  で描画バッファ内容を保持
+// option = HANDLE_BUFF_CLEAR で描画バッファ内容を破棄
 void matrix_flush(handle_buff_t option)
 {
     uint16_t *tmp = front;
@@ -278,7 +278,7 @@ void matrix_flush(handle_buff_t option)
 
     switch(option)
     {
-        case HANDLE_BUFF_INHERIT:
+        case HANDLE_BUFF_KEEP:
             matrix_paste(front);
             break;
         case HANDLE_BUFF_CLEAR:
