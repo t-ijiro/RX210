@@ -58,7 +58,7 @@ typedef enum {
     HANDLE_BUFF_CLEAR
 } handle_buff_t;
 
-// フォント機能使用時
+// フォント機能有効時
 #ifdef MATRIX_USE_FONT
 // １文字を描画バッファに書き込む
 // ch: 描画する文字 (A-Zのみ対応)
