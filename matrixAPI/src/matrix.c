@@ -248,8 +248,8 @@ void matrix_scroll_text(char dir)
         for(x = 0; x < MATRIX_WIDTH; x++)
         {
 			uint16_t current_line  = (scroll_text.pos_x + x) % scroll_text.length;
-            uint8_t  data         = scroll_text.text[current_line];
-            uint8_t   upper_offset  = scroll_text.pos_y;
+            uint8_t  data          = scroll_text.text[current_line];
+            uint8_t  upper_offset  = scroll_text.pos_y;
             uint8_t  bottom_offset = MATRIX_HEIGHT * 2 - scroll_text.pos_y;
             
 			if((data << upper_offset | data >> bottom_offset) & (1 << y))
