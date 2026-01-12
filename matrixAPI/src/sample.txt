@@ -1,0 +1,31 @@
+#include "matrix.h"
+
+void timer_isr(void)
+{
+    uint16_t data = matrix_get_data(x);
+    matrix_out(x, data);
+    x = (x + 1) % WIDTH;
+}
+
+void main(void)
+{
+    matrix_init();
+
+    matrix_scroller_set_text("HELLO WORLD");
+    matrix_scroller_set_foreground(pixel_red);
+  matrix_scroller_set_background(pixel_green);
+
+    start_t = millis();
+
+    while(1)
+    {
+        if(millis() - start_t >= 300)
+        {
+            matrix_scroller_scroll_text('l');
+            matrix_scroller_write_text();
+            matrix_flush(BUFF_CLEAR);
+            start_t = millis();
+        }
+    }
+}
+
