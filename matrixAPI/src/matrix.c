@@ -230,13 +230,17 @@ static void matrix_update_scroll_pos(char dir)
             {
                 scroll_text.pos_y = 0;
             }
+            
+            break;
         case 'd':
             scroll_text.pos_y--;
             
             if(scroll_text.pos_y < 0)
             {
                 scroll_text.pos_y = MATRIX_HEIGHT * 2 - 1;
-            }       
+            }
+            
+            break;
         default:
             break;
     }
