@@ -75,7 +75,7 @@ void matrix_set_scroll_text(const char *text);
 void matrix_set_scroll_colors(pixel_t fg, pixel_t bg);
 
 // スクロール文字列を指定した方向に１つずらす
-// 左：'l'  右：'r'
+// 左：'l'  右：'r' 上：'u'  下：'d'
 void matrix_scroll_text(char dir);
 #endif /* MATRIX_USE_FONT */
 
