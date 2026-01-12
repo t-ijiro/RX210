@@ -128,12 +128,12 @@ static const uint8_t ucALPHABET[26][8] = {
 
 // スクロール文字列管理構造体
 typedef struct {
-    uint8_t text[SCROLL_BUFF_SIZE];
-    size_t  length;
-    size_t  pos_x;
-    size_t  pos_y;
-    pixel_t fg_color;
-    pixel_t bg_color;
+    uint8_t  text[SCROLL_BUFF_SIZE];
+    uint16_t length;
+    uint16_t pos_x;
+    uint8_t  pos_y;
+    pixel_t  fg_color;
+    pixel_t  bg_color;
 } scroll_text_t;
 
 // スクロール文字列管理変数
@@ -270,15 +270,15 @@ void matrix_scroll_pos(char dir)
 void matrix_write_scroll_text(void)
 {
     uint8_t x, y;
-    size_t upper_offset  = scroll_text.pos_y;
-    size_t bottom_offset = FONT_HEIGHT - scroll_text.pos_y;
+    uint8_t upper_offset  = scroll_text.pos_y;
+    uint8_t bottom_offset = FONT_HEIGHT - scroll_text.pos_y;
 
     for(y = 0; y < MATRIX_HEIGHT; y++)
     {
         for(x = 0; x < MATRIX_WIDTH; x++)
         {
-            size_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
-            uint8_t data = scroll_text.text[current_line];
+            uint16_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
+            uint8_t  data = scroll_text.text[current_line];
             
 			if((data << upper_offset | data >> bottom_offset) & (1 << y))
             {
