@@ -278,13 +278,13 @@ void matrix_scroller_write_text(void)
     uint8_t upper_offset  = scroll_text.pos_y;
     uint8_t bottom_offset = FONT_HEIGHT - scroll_text.pos_y;
 
-    for(y = 0; y < MATRIX_HEIGHT; y++)
+    for(x = 0; x < MATRIX_WIDTH; x++)
     {
-        for(x = 0; x < MATRIX_WIDTH; x++)
+        uint16_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
+        uint8_t  data = scroll_text.text[current_line];
+        
+        for(y = 0; y < MATRIX_HEIGHT; y++)
         {
-            uint16_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
-            uint8_t  data = scroll_text.text[current_line];
-            
 			if((data << upper_offset | data >> bottom_offset) & (1 << y))
             {
                 matrix_write(x, y, scroll_text.fg_color);
