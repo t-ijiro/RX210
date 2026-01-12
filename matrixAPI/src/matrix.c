@@ -176,7 +176,7 @@ void matrix_put_char(char ch, pixel_t fg, pixel_t bg)
 // スクロール文字列を設定
 // text: 表示する文字列 (A-Zのみ対応)
 // 最大文字数はSCROLL_TEXT_SIZE文字まで
-void matrix_scroll_set_text(const char *text)
+void matrix_scroller_set_text(const char *text)
 {
     scroll_text.pos_x = 0;
     scroll_text.pos_y = 0;
@@ -200,16 +200,21 @@ void matrix_scroll_set_text(const char *text)
     }
 }
 
-// スクロール文字列の前景色・背景色を設定
-void matrix_scroll_set_colors(pixel_t fg, pixel_t bg)
+// スクロール文字列の前景色を設定
+void matrix_scroller_set_foreground(pixel_t fg)
 {
     scroll_text.fg_color = fg;
+}
+
+// スクロール文字列の背景色を設定
+void matrix_scroller_set_background(pixel_t bg)
+{
     scroll_text.bg_color = bg;
 }
 
 // スクロール文字列の位置を指定した方向に１つずらす
 // 左：'l'  右：'r' 上：'u'  下：'d' 
-void matrix_scroll_shift_pos(char dir)
+void matrix_scroller_scroll_pos(char dir)
 {
     switch(dir)
     {
@@ -267,7 +272,7 @@ void matrix_scroll_shift_pos(char dir)
 }
 
 // 描画バッファにスクロール文字列を書き込む
-void matrix_scroll_write_text(void)
+void matrix_scroller_write_text(void)
 {
     uint8_t x, y;
     uint8_t upper_offset  = scroll_text.pos_y;
