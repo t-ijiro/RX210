@@ -199,13 +199,10 @@ void matrix_set_scroll_colors(pixel_t fg, pixel_t bg)
     scroll_text.bg_color = bg;
 }
 
-// スクロール文字列を指定した方向に１つずらす
-// 左：'l'  右：'r' 上：'u'  下：'d' 
-void matrix_scroll_text(char dir)
+// スクロール文字列の位置を更新
+static void matrix_update_scroll_pos(char dir)
 {
-    uint8_t x, y;
-	
-    switch(dir)
+	switch(dir)
     {
         case 'l':
             scroll_text.pos_x++;
@@ -242,6 +239,15 @@ void matrix_scroll_text(char dir)
         default:
             break;
     }
+}
+
+// スクロール文字列を指定した方向に１つずらす
+// 左：'l'  右：'r' 上：'u'  下：'d' 
+void matrix_scroll_text(char dir)
+{
+    uint8_t x, y;
+	
+	matrix_update_scroll_pos(dir);
     
     for(y = 0; y < MATRIX_HEIGHT; y++)
     {
