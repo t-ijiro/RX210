@@ -84,9 +84,17 @@ void matrix_clear(void)
 
 // フォント機能有効時
 #ifdef MATRIX_USE_FONT
-#define FONT_WIDTH 8 // アルファベット１文字分のデータ幅
-#define SCROLL_TEXT_SIZE 32 // スクロール文字列の文字数
-#define SCROLL_BUF_SIZE (SCROLL_TEXT_SIZE * FONT_WIDTH)
+// アルファベット１文字分の横データ幅
+#define FONT_WIDTH 8
+
+// アルファベット１文字分の縦データ幅
+#define FONT_HEIGHT 16
+
+// スクロール文字列の文字数
+#define SCROLL_TEXT_SIZE 32
+
+// スクロール文字列データ配列のサイズ
+#define SCROLL_BUFF_SIZE FONT_WIDTH * SCROLL_TEXT_SIZE
 
 // A-Zフォントデータ
 static const uint8_t ucALPHABET[26][8] = {
@@ -119,14 +127,14 @@ static const uint8_t ucALPHABET[26][8] = {
 };
 
 // スクロール文字列管理構造体
-typedef struct{
-    uint8_t text[SCROLL_BUF_SIZE];
-    int16_t length;
-    int16_t pos_x;
-    int16_t pos_y;
-    pixel_t fg_color;
-    pixel_t bg_color;
-}scroll_text_t;
+typedef struct {
+    uint8_t  text[SCROLL_BUFF_SIZE];
+    uint16_t length;
+    uint16_t pos_x;
+    uint16_t pos_y;
+    pixel_t  fg_color;
+    pixel_t  bg_color;
+} scroll_text_t;
 
 // スクロール文字列管理変数
 static scroll_text_t scroll_text = {
@@ -149,7 +157,7 @@ void matrix_put_char(char ch, pixel_t fg, pixel_t bg)
         return;
     }
     
-    for(x = 0; x < FONT_WIDTH; x++)
+    for(x = 0; x < MATRIX_WIDTH; x++)
     {
         for(y = 0; y < MATRIX_HEIGHT; y++)
         {
@@ -174,7 +182,7 @@ void matrix_set_scroll_text(const char *text)
     scroll_text.pos_y = 0;
     scroll_text.length = 0;
 
-    while(*text != '\0' && scroll_text.length < SCROLL_BUF_SIZE)
+    while(*text != '\0' && scroll_text.length < SCROLL_BUFF_SIZE)
     {
         char ch = *text++;
 
@@ -210,38 +218,50 @@ void matrix_scroll_text(char dir)
     switch(dir)
     {
         case 'l':
-            scroll_text.pos_x++;
-
-            if(scroll_text.length <= scroll_text.pos_x)
+            
+            if(scroll_text.pos_x < scroll_text.length - 1)
+            {
+                scroll_text.pos_x++;
+            }
+            else
             {
                 scroll_text.pos_x = 0;
             }
 
             break;
         case 'r':
-            scroll_text.pos_x--;
 
-            if(scroll_text.pos_x < 0)
+            if(0 < scroll_text.pos_x)
+            {
+                scroll_text.pos_x--;
+            }
+            else
             {
                 scroll_text.pos_x = scroll_text.length - 1;
             }       
 
             break;
         case 'u':
-            scroll_text.pos_y++;
             
-            if(MATRIX_HEIGHT * 2 <= scroll_text.pos_y)
+            if(scroll_text.pos_y < FONT_HEIGHT - 1)
+            {
+                scroll_text.pos_y++;
+            }
+            else
             {
                 scroll_text.pos_y = 0;
             }
             
             break;
         case 'd':
-            scroll_text.pos_y--;
             
-            if(scroll_text.pos_y < 0)
+            if(0 < scroll_text.pos_y)
             {
-                scroll_text.pos_y = MATRIX_HEIGHT * 2 - 1;
+                scroll_text.pos_y--;
+            }
+            else
+            {
+                scroll_text.pos_y = FONT_HEIGHT - 1;
             }
             
             break;
@@ -250,14 +270,14 @@ void matrix_scroll_text(char dir)
     }
     
     upper_offset  = scroll_text.pos_y;
-    bottom_offset = MATRIX_HEIGHT * 2 - scroll_text.pos_y;
+    bottom_offset = FONT_HEIGHT - scroll_text.pos_y;
     
     for(y = 0; y < MATRIX_HEIGHT; y++)
     {
         for(x = 0; x < MATRIX_WIDTH; x++)
         {
-			uint16_t current_line  = (scroll_text.pos_x + x) % scroll_text.length;
-            uint8_t  data          = scroll_text.text[current_line];
+            uint8_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
+            uint8_t data         = scroll_text.text[current_line];
             
 			if((data << upper_offset | data >> bottom_offset) & (1 << y))
             {
