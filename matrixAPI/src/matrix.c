@@ -121,8 +121,9 @@ static const uint8_t ucALPHABET[26][8] = {
 // スクロール文字列管理構造体
 typedef struct{
     uint8_t text[SCROLL_BUF_SIZE];
-    int32_t length;
-    int32_t position;
+    int8_t length;
+    int8_t pos_x;
+    int8_t pos_y;
     pixel_t fg_color;
     pixel_t bg_color;
 }scroll_text_t;
@@ -130,6 +131,7 @@ typedef struct{
 // スクロール文字列管理変数
 static scroll_text_t scroll_text = {
     {0x00},
+    0,
     0,
     0,
     pixel_off,
@@ -168,7 +170,8 @@ void matrix_put_char(char ch, pixel_t fg, pixel_t bg)
 // 最大文字数はSCROLL_TEXT_SIZE文字まで
 void matrix_set_scroll_text(const char *text)
 {
-    scroll_text.position = 0;
+    scroll_text.pos_x = 0;
+    scroll_text.pos_y = 0;
     scroll_text.length = 0;
 
     while(*text != '\0' && scroll_text.length < SCROLL_BUF_SIZE)
@@ -197,7 +200,7 @@ void matrix_set_scroll_colors(pixel_t fg, pixel_t bg)
 }
 
 // スクロール文字列を指定した方向に１つずらす
-// 左：'l'  右：'r'
+// 左：'l'  右：'r' 上：'u'  下：'d' 
 void matrix_scroll_text(char dir)
 {
     uint8_t x, y;
@@ -205,34 +208,51 @@ void matrix_scroll_text(char dir)
     switch(dir)
     {
         case 'l':
-            scroll_text.position++;
+            scroll_text.pos_x++;
 
-            if(scroll_text.length <= scroll_text.position)
+            if(scroll_text.length <= scroll_text.pos_x)
             {
-                scroll_text.position = 0;
+                scroll_text.pos_x = 0;
             }
 
             break;
         case 'r':
-            scroll_text.position--;
+            scroll_text.pos_x--;
 
-            if(scroll_text.position < 0)
+            if(scroll_text.pos_x < 0)
             {
-                scroll_text.position = scroll_text.length - 1;
+                scroll_text.pos_x = scroll_text.length - 1;
             }       
 
             break;
+        case 'u':
+            scroll_text.pos_y++;
+            
+            if(scroll_text.pos_y > MATRIX_HEIGHT * 2)
+            {
+                scroll_text.pos_y = 0;
+            }
+        case 'd':
+            scroll_text.pos_y--;
+            
+            if(scroll_text.pos_y < 0)
+            {
+                scroll_text.pos_y = MATRIX_HEIGHT * 2;
+            }       
         default:
             break;
     }
     
     for(y = 0; y < MATRIX_HEIGHT; y++)
     {
-        for(x = 0; x < FONT_WIDTH; x++)
+        for(x = 0; x < MATRIX_WIDTH; x++)
         {
-			uint16_t idx = (scroll_text.position + x) % scroll_text.length;
+			uint16_t current_line  = (scroll_text.pos_x + x) % scroll_text.length;
+            uint8_t  data         = scroll_text.text[current_line];
+            uint8_t   upper_offset  = scroll_text.pos_y;
+            uint8_t  bottom_offset = MATRIX_HEIGHT * 2 - scroll_text.pos_y;
             
-			if(scroll_text.text[idx] & (1 << y))
+			if((data << upper_offset | data >> bottom_offset) & (1 << y))
             {
                 matrix_write(x, y, scroll_text.fg_color);
 			}
