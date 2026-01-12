@@ -89,12 +89,6 @@ pixel_t matrix_read(uint8_t x, uint8_t y);
 // 描画バッファ全消去 
 void matrix_clear(void);
 
-// 描画バッファを外部バッファにコピー
-void matrix_copy(uint16_t *dst);
-
-// 描画バッファに外部バッファを貼り付け
-void matrix_paste(const uint16_t *src);
-
 // 描画バッファと表示バッファを入れ替える
 // option = HANDLE_BUFF_KEEP  で描画バッファ内容を保持
 // option = HANDLE_BUFF_CLEAR で描画バッファ内容を破棄
