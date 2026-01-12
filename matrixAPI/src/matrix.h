@@ -69,14 +69,17 @@ void matrix_put_char(char ch, pixel_t fg, pixel_t bg);
 // スクロール文字列を設定
 // text: 表示する文字列 (A-Zのみ対応)
 // 最大文字数は32文字まで
-void matrix_set_scroll_text(const char *text);
+void matrix_scroll_set_text(const char *text);
 
 // スクロール文字列の前景色・背景色を設定
-void matrix_set_scroll_colors(pixel_t fg, pixel_t bg);
+void matrix_scroll_set_colors(pixel_t fg, pixel_t bg);
 
-// スクロール文字列を指定した方向に１つずらす
+// スクロール文字列の位置を指定した方向に１つずらす
 // 左：'l'  右：'r' 上：'u'  下：'d'
-void matrix_scroll_text(char dir);
+void matrix_scroll_shift_pos(char dir);
+
+// 描画バッファにスクロール文字列を書き込む
+void matrix_scroll_write_text(void);
 #endif /* MATRIX_USE_FONT */
 
 // 描画バッファと表示バッファを入れ替える
