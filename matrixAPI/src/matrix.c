@@ -121,9 +121,9 @@ static const uint8_t ucALPHABET[26][8] = {
 // スクロール文字列管理構造体
 typedef struct{
     uint8_t text[SCROLL_BUF_SIZE];
-    int8_t length;
-    int8_t pos_x;
-    int8_t pos_y;
+    int16_t length;
+    int16_t pos_x;
+    int16_t pos_y;
     pixel_t fg_color;
     pixel_t bg_color;
 }scroll_text_t;
@@ -230,17 +230,13 @@ static void matrix_update_scroll_pos(char dir)
             {
                 scroll_text.pos_y = 0;
             }
-
-			break;
         case 'd':
             scroll_text.pos_y--;
             
             if(scroll_text.pos_y < 0)
             {
                 scroll_text.pos_y = MATRIX_HEIGHT * 2;
-            }
-
-			break;
+            }       
         default:
             break;
     }
