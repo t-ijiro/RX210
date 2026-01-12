@@ -268,7 +268,7 @@ void matrix_flush(handle_buff_t option)
     }
 }
 
-// 指定列のマトリックスLED送信用16bitデータを取得
+// 指定列の表示バッファからマトリックスLED送信用16bitデータを取得
 uint16_t matrix_get_data(uint8_t x)
 {
     return front[x];
