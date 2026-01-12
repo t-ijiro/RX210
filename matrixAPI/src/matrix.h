@@ -58,6 +58,18 @@ typedef enum {
     BUFF_CLEAR
 } buff_t;
 
+// 入出力初期化
+void matrix_init(void);
+
+// 描画バッファの指定座標に色を書き込む
+void matrix_write(uint8_t x, uint8_t y, pixel_t c);
+
+// 描画バッファの指定座標の色を読み込む
+pixel_t matrix_read(uint8_t x, uint8_t y);
+
+// 描画バッファ全消去 
+void matrix_clear(void);
+
 // フォント機能有効時
 #ifdef MATRIX_USE_FONT
 // １文字を描画バッファに書き込む
@@ -76,18 +88,6 @@ void matrix_set_scroll_colors(pixel_t fg, pixel_t bg);
 // 左：'l'  右：'r'
 void matrix_scroll_text(char dir);
 #endif /* MATRIX_USE_FONT */
-
-// 入出力初期化
-void matrix_init(void);
-
-// 描画バッファの指定座標に色を書き込む
-void matrix_write(uint8_t x, uint8_t y, pixel_t c);
-
-// 描画バッファの指定座標の色を読み込む
-pixel_t matrix_read(uint8_t x, uint8_t y);
-
-// 描画バッファ全消去 
-void matrix_clear(void);
 
 // 描画バッファと表示バッファを入れ替える
 // option = BUFF_KEEP  で描画バッファ内容を保持
