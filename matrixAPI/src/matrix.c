@@ -96,6 +96,9 @@ void matrix_clear(void)
 // スクロール文字列データ配列のサイズ
 #define SCROLL_BUFF_SIZE FONT_WIDTH * SCROLL_TEXT_SIZE
 
+// uint16_tをスクロール文字列のサイズを扱う型として定義
+typedef uint16_t text_size_t;
+
 // A-Zフォントデータ
 static const uint8_t ucALPHABET[26][8] = {
 	{0x00,0x00,0x1f,0x64,0x64,0x1f,0x00,0x00},
@@ -128,12 +131,12 @@ static const uint8_t ucALPHABET[26][8] = {
 
 // スクロール文字列管理構造体
 typedef struct {
-    uint8_t  text[SCROLL_BUFF_SIZE];
-    uint16_t length;
-    uint16_t pos_x;
-    uint16_t pos_y;
-    pixel_t  fg_color;
-    pixel_t  bg_color;
+    uint8_t     text[SCROLL_BUFF_SIZE];
+    text_size_t length;
+    text_size_t pos_x;
+    text_size_t pos_y;
+    pixel_t     fg_color;
+    pixel_t     bg_color;
 } scroll_text_t;
 
 // スクロール文字列管理変数
@@ -276,7 +279,7 @@ void matrix_scroll_text(char dir)
     {
         for(x = 0; x < MATRIX_WIDTH; x++)
         {
-            uint8_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
+            text_size_t current_line = (scroll_text.pos_x + x) % scroll_text.length;
             uint8_t data = scroll_text.text[current_line];
             
 			if((data << upper_offset | data >> bottom_offset) & (1 << y))
