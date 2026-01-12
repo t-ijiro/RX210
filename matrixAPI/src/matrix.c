@@ -251,8 +251,13 @@ static void matrix_update_scroll_pos(char dir)
 void matrix_scroll_text(char dir)
 {
     uint8_t x, y;
+    uint8_t upper_offset;
+    uint8_t bottom_offset;
 	
 	matrix_update_scroll_pos(dir);
+    
+    upper_offset  = scroll_text.pos_y;
+    bottom_offset = MATRIX_HEIGHT * 2 - scroll_text.pos_y;
     
     for(y = 0; y < MATRIX_HEIGHT; y++)
     {
@@ -260,8 +265,6 @@ void matrix_scroll_text(char dir)
         {
 			uint16_t current_line  = (scroll_text.pos_x + x) % scroll_text.length;
             uint8_t  data          = scroll_text.text[current_line];
-            uint8_t  upper_offset  = scroll_text.pos_y;
-            uint8_t  bottom_offset = MATRIX_HEIGHT * 2 - scroll_text.pos_y;
             
 			if((data << upper_offset | data >> bottom_offset) & (1 << y))
             {
