@@ -246,9 +246,9 @@ void matrix_scroll_text(char dir)
 #endif /* MATRIX_USE_FONT */
 
 // 描画バッファと表示バッファを入れ替える
-// option = HANDLE_BUFF_KEEP  で描画バッファ内容を保持
-// option = HANDLE_BUFF_CLEAR で描画バッファ内容を破棄
-void matrix_flush(handle_buff_t option)
+// option = BUFF_KEEP  で描画バッファ内容を保持
+// option = BUFF_CLEAR で描画バッファ内容を破棄
+void matrix_flush(buff_t option)
 {
     uint16_t *tmp = front;
     front = back;
@@ -256,10 +256,10 @@ void matrix_flush(handle_buff_t option)
 
     switch(option)
     {
-        case HANDLE_BUFF_KEEP:
+        case BUFF_KEEP:
             memmove(back, front, MATRIX_WIDTH);
             break;
-        case HANDLE_BUFF_CLEAR:
+        case BUFF_CLEAR:
             memset(back, 0x0000, MATRIX_WIDTH);
             break;
         default :
