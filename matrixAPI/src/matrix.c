@@ -213,7 +213,7 @@ void matrix_scroller_set_background(pixel_t bg)
 }
 
 // スクロール文字列の位置を指定した方向に１つずらす
-// 左：'l'  右：'r' 上：'u'  下：'d' 
+// 左：'l'  右：'r'  上：'u'  下：'d' 
 void matrix_scroller_scroll_pos(char dir)
 {
     switch(dir)
