@@ -200,6 +200,7 @@ void matrix_set_scroll_colors(pixel_t fg, pixel_t bg)
 }
 
 // スクロール文字列の位置を更新
+// 左：'l'  右：'r' 上：'u'  下：'d' 
 static void matrix_update_scroll_pos(char dir)
 {
 	switch(dir)
