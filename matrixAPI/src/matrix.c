@@ -275,10 +275,11 @@ uint16_t matrix_get_data(uint8_t x)
 }
 
 // 16bitデータをマトリックスLEDの指定列に出力
-// data のビット配置:
-// bit[15:8] : 指定列の赤LEDの点灯パターン
-// bit[7:0]  : 指定列の緑LEDの点灯パターン
-// 例 : 10101111 01011111 = 赤緑赤緑橙橙橙橙
+// uint16_t dataのbit配置:
+// bit[15:8] : 赤LEDの点灯パターン
+// bit[7:0]  : 緑LEDの点灯パターン
+// 例 : 0xAF5F = 0b1010111101011111
+// 意味 : 上から順に赤緑赤緑橙橙橙橙で点灯
 void matrix_out(uint8_t x, uint16_t data)
 {
     uint8_t shift;
