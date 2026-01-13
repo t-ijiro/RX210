@@ -23,7 +23,7 @@ void main(void)
     {
         if(millis() - start_t >= 300)
         {
-            matrix_scroller_scroll('l');
+            matrix_scroller_scroll_pos('l');
             matrix_scroller_write_text();
             matrix_flush(BUFF_CLEAR);
 
