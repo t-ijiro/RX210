@@ -276,7 +276,7 @@ void matrix_scroller_write_text(void)
 {
     uint8_t x, y;
     uint8_t upper_offset  = scroll_text.pos_y;
-    uint8_t bottom_offset = FONT_HEIGHT - scroll_text.pos_y;
+    uint8_t bottom_offset = FONT_HEIGHT - upper_offset;
 
     for(x = 0; x < MATRIX_WIDTH; x++)
     {
