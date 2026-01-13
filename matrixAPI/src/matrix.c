@@ -79,7 +79,7 @@ pixel_t matrix_read(uint8_t x, uint8_t y)
 // 描画バッファ全削除
 void matrix_clear(void)
 {
-    memset(back, 0x0000, MATRIX_WIDTH);
+    memset(back, 0x0000, sizeof(buffer[0]));
 }
 
 // フォント機能有効時
@@ -310,10 +310,10 @@ void matrix_flush(buff_t option)
     switch(option)
     {
         case BUFF_KEEP:
-            memmove(back, front, MATRIX_WIDTH);
+            memmove(back, front, sizeof(buffer[0]));
             break;
         case BUFF_CLEAR:
-            memset(back, 0x0000, MATRIX_WIDTH);
+            memset(back, 0x0000, sizeof(buffer[0]));
             break;
         default :
             // 描画バッファの状態は不定
