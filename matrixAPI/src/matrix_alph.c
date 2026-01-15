@@ -126,10 +126,10 @@ static const uint8_t ucALPHABET[26][8] = {
 
 // スクロール文字列管理構造体
 typedef struct {
-    char     str[SCROLL_TEXT_SIZE + 1];   // 元の文字列を保存（NULL終端含む）
+    char     str[SCROLL_TEXT_SIZE + 1];   // 元の文字列を保存
     uint16_t str_length;                  // 文字列の文字数
-    uint16_t pos_x;                       // 横スクロール位置（ピクセル単位）
-    uint8_t  pos_y;                       // 縦スクロール位置（ピクセル単位）
+    uint16_t pos_x;                       // 横スクロール位置
+    uint8_t  pos_y;                       // 縦スクロール位置
     pixel_t  fg_color;                    // 前景色
     pixel_t  bg_color;                    // 背景色
 } scroll_text_t;
@@ -295,11 +295,10 @@ void matrix_scroller_write_text(void)
         uint16_t char_index = pixel_pos / FONT_WIDTH;
         uint8_t  bit_index = pixel_pos % FONT_WIDTH;
         
-        // 文字を取得
         char ch = scroll_text.str[char_index];
         
-        // フォントデータを取得（A-Z以外は空白）
         uint8_t data;
+        
         if(ch >= 'A' && ch <= 'Z')
         {
             data = ucALPHABET[ch - 'A'][bit_index];
