@@ -14,8 +14,6 @@ void main(void)
     matrix_scroller_set_text("HELLO WORLD");
     matrix_scroller_set_foreground(pixel_red);
     matrix_scroller_set_background(pixel_green);
-    matrix_scroller_write_text();
-    matrix_flush(BUFF_CLEAR);
 
     start_t = millis();
 
@@ -23,9 +21,9 @@ void main(void)
     {
         if(millis() - start_t >= 300)
         {
-            matrix_scroller_scroll_pos('l');
             matrix_scroller_write_text();
             matrix_flush(BUFF_CLEAR);
+            matrix_scroller_scroll_pos('l');
 
             start_t = millis();
         }
