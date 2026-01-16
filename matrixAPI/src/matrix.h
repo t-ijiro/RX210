@@ -62,6 +62,16 @@ void matrix_clear(void);
 
 // フォント機能有効時
 #ifdef MATRIX_USE_FONT
+
+// スクロール文字列の移動方向を指定するための型
+typedef enum {
+    SCROLL_NONE  = 0,
+    SCROLL_LEFT  = (1u << 0),
+    SCROLL_RIGHT = (1u << 1),
+    SCROLL_UP    = (1u << 2),
+    SCROLL_DOWN  = (1u << 3),
+} scroll_t;
+
 // １文字を描画バッファに書き込む
 // ch: 描画する文字 (A-Zのみ対応)
 void matrix_put_char(char ch, pixel_t fg, pixel_t bg);
@@ -78,8 +88,7 @@ void matrix_scroller_set_foreground(pixel_t fg);
 void matrix_scroller_set_background(pixel_t bg);
 
 // スクロール文字列の位置を指定した方向に１つずらす
-// 左：'l'  右：'r'  上：'u'  下：'d'
-void matrix_scroller_scroll_pos(char dir);
+void matrix_scroller_scroll_pos(scroll_t dir);
 
 // 描画バッファにスクロール文字列を書き込む
 void matrix_scroller_write_text(void);
