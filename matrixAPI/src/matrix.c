@@ -254,7 +254,7 @@ void matrix_scroller_scroll_pos(uint8_t dir)
         }
     }
 
-    // ↓
+    // 下
     if(dir & SCROLL_DOWN)
     {
         if(0 < scroll_text.pos_y)
