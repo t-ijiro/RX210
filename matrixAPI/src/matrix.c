@@ -204,65 +204,67 @@ void matrix_scroller_set_background(pixel_t bg)
 }
 
 // スクロール文字列の位置を指定した方向に１つずらす
-// 左：'l'  右：'r'  上：'u'  下：'d' 
-void matrix_scroller_scroll_pos(char dir)
+// SCROLL_LEFT | SCROLL_DOWN のように複数指定可能
+void matrix_scroller_scroll_pos(uint8_t dir)
 {
     uint16_t total_width = scroll_text.str_length * FONT_WIDTH;
-    
+
     // 文字列が空の場合は何もしない
     if(scroll_text.str_length == 0)
     {
         return;
     }
-    
-    switch(dir)
+
+    // 左
+    if(dir & SCROLL_LEFT)
     {
-        case 'l':
-            if(scroll_text.pos_x < total_width - 1)
-            {
-                scroll_text.pos_x++;
-            }
-            else
-            {
-                scroll_text.pos_x = 0;
-            }
-            break;
-            
-        case 'r':
-            if(0 < scroll_text.pos_x)
-            {
-                scroll_text.pos_x--;
-            }
-            else
-            {
-                scroll_text.pos_x = total_width - 1;
-            }       
-            break;
-            
-        case 'u':
-            if(scroll_text.pos_y < FONT_HEIGHT - 1)
-            {
-                scroll_text.pos_y++;
-            }
-            else
-            {
-                scroll_text.pos_y = 0;
-            }
-            break;
-            
-        case 'd':
-            if(0 < scroll_text.pos_y)
-            {
-                scroll_text.pos_y--;
-            }
-            else
-            {
-                scroll_text.pos_y = FONT_HEIGHT - 1;
-            }
-            break;
-            
-        default:
-            break;
+        if(scroll_text.pos_x < total_width - 1)
+        {
+            scroll_text.pos_x++;
+        }
+        else
+        {
+            scroll_text.pos_x = 0;
+        }
+    }
+
+    // 右
+    if(dir & SCROLL_RIGHT)
+    {
+        if(0 < scroll_text.pos_x)
+        {
+            scroll_text.pos_x--;
+        }
+        else
+        {
+            scroll_text.pos_x = total_width - 1;
+        }
+    }
+
+    // 上
+    if(dir & SCROLL_UP)
+    {
+        if(scroll_text.pos_y < FONT_HEIGHT - 1)
+        {
+            scroll_text.pos_y++;
+        }
+        else
+        {
+            scroll_text.pos_y = 0;
+        }
+    }
+
+    // ↓
+    if(dir & SCROLL_DOWN)
+    {
+        if(0 < scroll_text.pos_y)
+        {
+            scroll_text.pos_y--;
+        }
+        else
+        {
+            scroll_text.pos_y = FONT_HEIGHT - 1;
+        }
     }
 }
 
