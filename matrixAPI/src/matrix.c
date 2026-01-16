@@ -1,7 +1,6 @@
 // matrix.c
 // Created on : 2025/12/13
 // Author : T.Ijiro
-// Modified: スクロール文字列のメモリ効率を改善
 
 #include <stdint.h>
 #include <string.h>
