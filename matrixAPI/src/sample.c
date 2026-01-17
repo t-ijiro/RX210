@@ -23,7 +23,7 @@ void main(void)
         {
             matrix_scroller_write_text();
             matrix_flush(BUFF_CLEAR);
-            matrix_scroller_scroll_pos('l');
+            matrix_scroller_scroll_pos(SCROLL_LEFT);
 
             start_t = millis();
         }
