@@ -88,6 +88,7 @@ void matrix_scroller_set_foreground(pixel_t fg);
 void matrix_scroller_set_background(pixel_t bg);
 
 // スクロール文字列の位置を指定した方向に１つずらす
+// SCROLL_LEFT | SCROLL_DOWN のように複数指定可能
 void matrix_scroller_scroll_pos(scroll_t dir);
 
 // 描画バッファにスクロール文字列を書き込む
