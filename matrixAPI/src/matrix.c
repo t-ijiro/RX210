@@ -145,7 +145,7 @@ static scroll_text_t scroll_text = {
 
 // １文字を描画バッファに書き込む
 // ch: 描画する文字 (A-Zのみ対応)
-void matrix_put_char(char ch, pixel_t fg, pixel_t bg)
+void matrix_write_char(char ch, pixel_t fg, pixel_t bg)
 {
     uint8_t x, y;
 
