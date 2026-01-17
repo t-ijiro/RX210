@@ -74,7 +74,7 @@ typedef enum {
 
 // １文字を描画バッファに書き込む
 // ch: 描画する文字 (A-Zのみ対応)
-void matrix_put_char(char ch, pixel_t fg, pixel_t bg);
+void matrix_write_char(char ch, pixel_t fg, pixel_t bg);
 
 // スクロール文字列を設定
 // text: 表示する文字列 (A-Zのみ対応)
