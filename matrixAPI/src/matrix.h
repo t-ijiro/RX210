@@ -65,11 +65,11 @@ void matrix_clear(void);
 
 // スクロール文字列の移動方向を指定するための型
 typedef enum {
-    SCROLL_NONE  = 0,
-    SCROLL_LEFT  = (1u << 0),
-    SCROLL_RIGHT = (1u << 1),
-    SCROLL_UP    = (1u << 2),
-    SCROLL_DOWN  = (1u << 3),
+    SCROLL_NONE  = 0,         // 0x00 停止
+    SCROLL_LEFT  = (1u << 0), // 0x01 左
+    SCROLL_RIGHT = (1u << 1), // 0x02 右
+    SCROLL_UP    = (1u << 2), // 0x04 上
+    SCROLL_DOWN  = (1u << 3), // 0x08 下
 } scroll_t;
 
 // １文字を描画バッファに書き込む
