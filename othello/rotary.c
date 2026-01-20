@@ -67,7 +67,7 @@ int16_t rotary_calc_delta(rotary_t *r)
     return r->count_new - r->count_old;
 }
 
-rotary_click_t rotary_get_click_dir(int16_t delat)
+rotary_click_t rotary_get_click_dir(int16_t delta)
 {
     if(COUNT_PER_CLICK <= delta)
     {
