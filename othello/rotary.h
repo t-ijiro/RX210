@@ -48,7 +48,10 @@
  * 
  */
 
-typedef struct rotary rotary_t;
+typedef struct {
+    int16_t count_new;
+    int16_t count_old;
+} rotary_t;
 
 typedef enum {
     CLICK_IDLE,
