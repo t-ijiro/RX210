@@ -4,11 +4,6 @@
 
 #define COUNT_PER_CLICK 4
 
-struct rotary {
-    int16_t count_new;
-    int16_t count_old;
-};
-
 void rotary_init(void)
 {
     // プロテクトレジスタ解除
