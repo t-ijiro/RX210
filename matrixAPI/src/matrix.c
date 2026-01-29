@@ -187,7 +187,6 @@ void matrix_scroller_set_text(const char *text)
         text++;
     }
     
-    // NULL終端を追加
     scroll_text.str[scroll_text.str_length] = '\0';
 }
 
