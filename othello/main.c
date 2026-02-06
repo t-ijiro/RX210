@@ -996,13 +996,19 @@ unsigned char make_flip_dir_flag(enum stone_color brd[][MAT_WIDTH], int x, int y
             dy += DXDY[dir][1];
 
             // 範囲外ならbreak
-            if(is_out_of_board(x + dx, y + dy)) break;
+            if(is_out_of_board(x + dx, y + dy))
+            {
+                break;
+            }
 
             // コマの色を調査
             search = read_stone_at(brd, x + dx, y + dy);
 
             // 何も置かれていなかったらbreak
-            if(search == stone_black) break;
+            if(search == stone_black)
+            {
+                break;
+            }
 
             // 自色のコマに遭遇
             if(search == sc)
