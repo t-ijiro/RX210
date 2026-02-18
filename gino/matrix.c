@@ -1,6 +1,6 @@
-// matrix.c
-// Created on : 2025/12/13
-// Author : T.Ijiro
+/* 
+ * e2417105
+ */
 
 #include <stdint.h>
 #include <string.h>
