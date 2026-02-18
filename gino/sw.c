@@ -1,8 +1,6 @@
 /*
  * sw.c
- *
- *  Created on: 2026/01/06
- *      Author: e2417105
+ * e2417105
  */
 #include <stdint.h>
 #include "iodefine.h"
@@ -29,3 +27,4 @@ uint8_t sw_read(uint8_t sw)
 		return SW_OFF;
 	}
 }
+
