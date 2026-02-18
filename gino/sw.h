@@ -1,8 +1,6 @@
 /*
  * sw.h
- *
- *  Created on: 2026/01/06
- *      Author: e2417105
+ * e2417105
  */
 
 #ifndef SW_H_
@@ -24,3 +22,4 @@ void sw_init(void);
 uint8_t sw_read(uint8_t sw);
 
 #endif /* SW_H_ */
+
