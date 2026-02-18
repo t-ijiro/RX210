@@ -39,8 +39,8 @@ const unsigned char arrow[8][8] = {
 
 unsigned char mode;
 unsigned char pre_mode;
-volatile unsigned long time_1m_count = 0;
-volatile unsigned int btime = 0;
+volatile unsigned long time_1m_count;
+volatile unsigned int btime;
 volatile long temp_total;
 volatile unsigned char temp_meas_cnt;
 
