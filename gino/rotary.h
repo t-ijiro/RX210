@@ -1,5 +1,5 @@
 /* 
- * rotary.c
+ * rotary.h
  * e2417105
  */
 
@@ -27,4 +27,5 @@ void rotary_record_old(rotary_t *r);
 int16_t rotary_calc_delta(rotary_t *r);
 rotary_click_t rotary_get_click_dir(int16_t delta);
 #endif /* ROTARY_H */
+
 
