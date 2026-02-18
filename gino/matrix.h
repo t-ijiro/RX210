@@ -1,6 +1,6 @@
-// matrix.h
-// Created on : 2025/12/13
-// Author : T.Ijiro
+/* 
+ * e2417105
+ */
 
 #ifndef MATRIX_H
 #define MATRIX_H
