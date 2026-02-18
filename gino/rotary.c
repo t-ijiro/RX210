@@ -1,4 +1,5 @@
 /* 
+ * rotary.c
  * e2417105
  */
 
@@ -89,3 +90,4 @@ rotary_click_t rotary_get_click_dir(int16_t delta)
         return CLICK_IDLE;
     }
 }
+
