@@ -176,7 +176,6 @@ void main(void)
 	lcd_xy(16, 2);
 	lcd_put(0xFF);
 	flush_lcd();
-	flush_lcd();
 
 	sw5.pre = SW_OFF;
 	sw6.pre = SW_OFF;
