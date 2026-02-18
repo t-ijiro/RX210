@@ -1,4 +1,5 @@
 /* 
+ * hardwareInit.c
  * e2417105
  */
 
@@ -269,3 +270,4 @@ void init_IRQ1(void)
     // IRQ1割り込み優先度設定（レベル1）
     IPR(ICU, IRQ1) = 1;
 }
+
