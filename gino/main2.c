@@ -201,7 +201,7 @@ void main(void)
 				sw[i].pre = sw[i].cur;
 			}
 
-			if(millis() - sw[i].debounce_t >= CHAT_PERIOD_MS && (sw[i].stable != sw[i].cur))
+			if((millis() - sw[i].debounce_t >= CHAT_PERIOD_MS) && (sw[i].stable != sw[i].cur))
 			{
 				if(sw[i].stable == SW_ON && sw[i].cur == SW_OFF)
 				{
