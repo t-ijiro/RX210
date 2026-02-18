@@ -12,7 +12,7 @@
 // *******************************************************
 //
 // フォント機能を有効にする場合はコメントアウトを外す
-#define MATRIX_USE_FONT
+// #define MATRIX_USE_FONT
 //
 // *******************************************************
 // 行列番号割り振り
@@ -73,11 +73,11 @@ typedef enum {
 } scroll_t;
 
 // １文字を描画バッファに書き込む
-// ch: 描画する文字 (A-Zのみ対応)
+// ch: 描画する文字 (A-Zのみ)
 void matrix_write_char(char ch, pixel_t fg, pixel_t bg);
 
 // スクロール文字列を設定
-// text: 表示する文字列 (A-Zのみ対応)
+// text: 表示する文字列 (A-Zのみ)
 // 最大文字数は32文字まで
 void matrix_scroller_set_text(const char *text);
 
