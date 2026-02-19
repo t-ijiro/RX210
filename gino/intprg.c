@@ -22,11 +22,11 @@
 #include "iodefine.h"
 #include "matrix.h"
 #include "vect.h"
-static unsigned char vert_cnt = 0;
-extern long temp_total;
-extern unsigned char temp_meas_cnt;
-extern unsigned int btime;
-extern unsigned long time_1m_count;
+static uint8_t vert_cnt = 0;
+extern uint32_t btime;
+extern uint64_t time_1m_count;
+extern int64_t temp_total;
+extern uint8_t temp_meas_cnt;
 
 #pragma section IntPRG
 
@@ -79,7 +79,7 @@ void Excep_CMT1_CMI1(void)
 // CMT2 CMI2
 void Excep_CMT2_CMI2(void)
 {
-	unsigned short data = matrix_get_data(vert_cnt);
+	uint16_t data = matrix_get_data(vert_cnt);
 	matrix_out(vert_cnt, data);
 	vert_cnt = (1 + vert_cnt) % 8;
 }
@@ -172,14 +172,13 @@ void Excep_S12AD_S12ADI0(void){
 
 	if(temp_meas_cnt == 100)
 	{
-		long temp_ave = temp_total / temp_meas_cnt;
+		int64_t temp_ave = temp_total / temp_meas_cnt;
 		lcd_xy(1, 2);
 		lcd_puts("temperature:");
 		lcd_dataout(temp_ave/10);
 		lcd_put(0xDF);
 		lcd_put(0x43);
 		flush_lcd();
-
 		temp_meas_cnt = 0;
 		temp_total = 0;
 	}
