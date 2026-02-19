@@ -15,6 +15,7 @@
 #endif
 
 #include <machine.h>
+#include <stdint.h>
 #include <string.h>
 #include "iodefine.h"
 #include "lcd_lib4.h"
@@ -26,7 +27,7 @@
 
 #define CHAT_PERIOD_MS 50
 
-const unsigned char arrow[8][8] = {
+const uint8_t arrow[8][8] = {
 		{0x08,0x18,0x38,0x7f,0x7f,0x38,0x18,0x08}, //上
 		{0x18,0x18,0x18,0xff,0x7e,0x3c,0x18,0x00}, //右
 		{0x10,0x18,0x1c,0xfe,0xfe,0x1c,0x18,0x08}, //下
@@ -37,14 +38,14 @@ const unsigned char arrow[8][8] = {
 		{0x03,0x47,0x6e,0x7c,0x78,0x7c,0x7e,0x00}  //右上
 };
 
-unsigned char mode;
-unsigned char pre_mode;
-volatile unsigned long time_1m_count;
-volatile unsigned int btime;
-volatile long temp_total;
-volatile unsigned char temp_meas_cnt;
+uint8_t mode;
+uint8_t pre_mode;
+volatile uint64_t time_1m_count;
+volatile uint32_t btime;
+volatile int64_t temp_total;
+volatile uint8_t temp_meas_cnt;
 
-unsigned long millis(void)
+uint64_t millis(void)
 {
 	return time_1m_count;
 }
@@ -100,9 +101,9 @@ void ad_start()
 	S12AD.ADCSR.BIT.ADST = 1;
 }
 
-void matrix_set_arrow(unsigned char arrow_id, pixel_t color)
+void matrix_set_arrow(uint8_t arrow_id, pixel_t color)
 {
-	unsigned char x, y;
+	uint8_t x, y;
 
 	for(y = 0; y < 8; y++)
 	{
@@ -120,7 +121,7 @@ void matrix_set_arrow(unsigned char arrow_id, pixel_t color)
 	}
 }
 
-void beep(unsigned int tone, unsigned int interval)
+void beep(uint32_t tone, uint32_t interval)
 {
 	if (tone)
 	{
@@ -146,23 +147,23 @@ void abort(void);
 
 void main(void)
 {
-	unsigned char i;
+	uint8_t i;
 	// sw
 	sw_t sw[4]; 
-	unsigned char sw_flag = 0x00;
+	uint8_t sw_flag = 0x00;
 	// mode1
-	unsigned char sx = 0;
+	uint8_t sx = 0;
 	
 	// mode2
-	unsigned int beep_time = 100;
+	uint32_t beep_time = 100;
 	
 	// mode4
 	rotary_t rotary = rotary_get_instance(0, 0);
 	rotary_click_t rotary_click_dir;
 	pixel_t color = pixel_red;
 	pixel_t colors[3] = {pixel_green, pixel_orange, pixel_red};
-	unsigned char color_id = 0;
-	unsigned char arrow_id = 0;
+	uint8_t color_id = 0;
+	uint8_t arrow_id = 0;
 
 	init_CLK();
 	init_LCD();
@@ -193,7 +194,7 @@ void main(void)
 	{
 		for(i = 0; i < 4; i++)
 		{   
-			unsigned char sw_id = i + 5; // 5 ~ 8
+			uint8_t sw_id = i + 5; // 5 ~ 8
 			sw[i].cur = sw_read(sw_id);
 			if(sw[i].pre != sw[i].cur)
 			{
