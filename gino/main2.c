@@ -24,7 +24,7 @@
 #include "rotary.h"
 #include "sw.h"
 
-#define CHAT_PERIOD_MS 20
+#define CHAT_PERIOD_MS 50
 
 const unsigned char arrow[8][8] = {
 		{0x08,0x18,0x38,0x7f,0x7f,0x38,0x18,0x08}, //上
