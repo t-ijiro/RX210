@@ -19,6 +19,7 @@
 ************************************************************************/
 
 #include <machine.h>
+#include <stdint.h>
 #include "iodefine.h"
 #include "matrix.h"
 #include "vect.h"
