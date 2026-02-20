@@ -27,7 +27,7 @@
 
 #define CHAT_PERIOD_MS 50
 
-const uint8_t arrow[8][8] = {
+static const uint8_t arrow[8][8] = {
 		{0x08,0x18,0x38,0x7f,0x7f,0x38,0x18,0x08}, //上
 		{0x18,0x18,0x18,0xff,0x7e,0x3c,0x18,0x00}, //右
 		{0x10,0x18,0x1c,0xfe,0xfe,0x1c,0x18,0x08}, //下
@@ -38,12 +38,27 @@ const uint8_t arrow[8][8] = {
 		{0x03,0x47,0x6e,0x7c,0x78,0x7c,0x7e,0x00}  //右上
 };
 
-uint8_t mode;
-uint8_t pre_mode;
+static uint8_t mode;
+static uint8_t pre_mode;
 volatile uint64_t time_1m_count;
 volatile uint32_t btime;
+
+// sw
+static sw_t sw[4];
+// mode1
+static uint8_t sx = 0;
+// mode2
+static uint32_t beep_time = 100;
+// mode3
 volatile int64_t temp_total;
 volatile uint8_t temp_meas_cnt;
+// mode4
+static rotary_t rotary = rotary_get_instance(0, 0);
+static rotary_click_t rotary_click_dir;
+static pixel_t color = pixel_red;
+static pixel_t colors[3] = {pixel_green, pixel_orange, pixel_red};
+static uint8_t color_id = 0;
+static uint8_t arrow_id = 0;
 
 uint64_t millis(void)
 {
@@ -148,29 +163,14 @@ void abort(void);
 void main(void)
 {
 	uint8_t i;
-	// sw
-	sw_t sw[4]; 
 	uint8_t sw_flag = 0x00;
-	// mode1
-	uint8_t sx = 0;
-	
-	// mode2
-	uint32_t beep_time = 100;
-	
-	// mode4
-	rotary_t rotary = rotary_get_instance(0, 0);
-	rotary_click_t rotary_click_dir;
-	pixel_t color = pixel_red;
-	pixel_t colors[3] = {pixel_green, pixel_orange, pixel_red};
-	uint8_t color_id = 0;
-	uint8_t arrow_id = 0;
 
 	init_CLK();
 	init_LCD();
 	init_BUZZER();
-	init_CMT0(1, 1);  // 1m秒  割り込みスタート
-	init_CMT1(10, 0); // 10m秒 割り込み停止
-	init_CMT2(2, 0);  // 2m秒  割り込み停止
+	init_CMT0(1, 1);  // 1m秒  タイマースタート
+	init_CMT1(10, 0); // 10m秒 タイマーストップ
+	init_CMT2(2, 0);  // 2m秒  タイマーストップ
 	init_AD();
 	sw_init();
 	matrix_init();
