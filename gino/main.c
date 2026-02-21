@@ -53,7 +53,7 @@ static uint32_t beep_time = 100;
 volatile int64_t temp_total;
 volatile uint8_t temp_meas_cnt;
 // mode4
-static rotary_t rotary = rotary_get_instance(0, 0);
+static rotary_t rotary;
 static rotary_click_t rotary_click_dir;
 static pixel_t color = pixel_red;
 static pixel_t colors[3] = {pixel_green, pixel_orange, pixel_red};
@@ -189,6 +189,8 @@ void main(void)
 		sw[i].pre = SW_OFF;
 		sw[i].stable = SW_OFF;
 	}
+	
+	rotary = rotary_get_instance(0, 0);
 
 	while(1)
 	{
