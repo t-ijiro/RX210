@@ -215,7 +215,7 @@ void main(void)
 		
 		if(sw_flag & 0x10)
 		{
-			mode = (mode + 1) % 4;
+			mode = 1 + mode % 4;
 			sw_flag &= ~0x10;
 		}
 
